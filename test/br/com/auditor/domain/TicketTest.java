@@ -16,7 +16,7 @@ public class TicketTest {
 	public void testGetNumber() {
 		String ticketNumber= "2012120410000091";
 		Ticket ticket= new Ticket("2012120410000091");
-		assertTrue(ticketNumber.compareTo(ticket.getNumber())==1);
+		assertTrue(ticketNumber.equals(ticket.getNumber()));
 	}
 
 }
