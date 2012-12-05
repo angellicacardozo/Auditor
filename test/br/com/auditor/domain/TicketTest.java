@@ -12,6 +12,7 @@ public class TicketTest {
 		desenvolvedor escreveu
 	 */
 	
+	@Test
 	public void testGetNumber() {
 		String ticketNumber= "2012120410000091";
 		Ticket ticket= new Ticket("2012120410000091");
