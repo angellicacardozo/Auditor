@@ -12,8 +12,10 @@ public class TicketTest {
 		desenvolvedor escreveu
 	 */
 	
-	public void testCreate() {
-		
+	public void testGetNumber() {
+		String ticketNumber= "2012120410000091";
+		Ticket ticket= new Ticket("2012120410000091");
+		assertTrue(ticketNumber.compareTo(ticket.getNumber())==1);
 	}
 
 }
