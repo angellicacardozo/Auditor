@@ -40,7 +40,8 @@ public class TicketTest {
 	 */
 	
 	/**
-	 * 
+	 * When a ticket open for the first time, it must contains a default update
+	 * 	setting its states to NEW
 	 */
 	@Test
 	public void testObtaningCurrentStateInNewInstance() {
