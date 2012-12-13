@@ -6,7 +6,7 @@ public class Update {
 	private String quee;
 	private String state;
 	private GregorianCalendar date;
-	private String owner;
+	private String owner= new String("SYSTEM");
 	
 	public String getQuee() {
 		return quee;
@@ -27,5 +27,11 @@ public class Update {
 		this.date = date;
 	}
 	
+	public void setOwner(String owner) {
+		this.owner= owner;
+	}
 	
+	public String getOwner() {
+		return this.owner;
+	}
 }

@@ -3,4 +3,21 @@
   <groupId>Auditor</groupId>
   <artifactId>Auditor</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.joda</groupId>
+			<artifactId>joda-convert</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.1</version>
+		</dependency>
+  </dependencies>
 </project>

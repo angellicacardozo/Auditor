@@ -2,7 +2,12 @@ package br.com.auditor.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 public class Ticket {
 	
@@ -38,7 +43,7 @@ public class Ticket {
 	 * @param quee
 	 */
 	public void applyUpdate(Update change) {
-
+		this.updates.add(change);
 	}
 	
 	/**
@@ -51,6 +56,22 @@ public class Ticket {
 		}
 		
 		return this.updates.get(this.updates.size()-1);
+	}
+	
+	public String getCurrentOwner() {
+		if(this.getCurrentState()==null) {
+			return null;
+		}
+		
+		Update currentState= this.getCurrentState();
+		return currentState.getOwner();
+	}
+	
+	public int getTotalOpenDays() {
+		Date past = this.getOpenDate().getTime();
+		Date today= new GregorianCalendar().getTime();
+		
+		return Days.daysBetween(new DateTime(past), new DateTime(today)).getDays();
 	}
 	
 }
