@@ -1,11 +1,11 @@
 package br.com.auditor.domain;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 public class Update {
 	private String quee;
 	private String state;
-	private GregorianCalendar date;
+	private Calendar date;
 	private String owner= new String("SYSTEM");
 	
 	public String getQuee() {
@@ -20,10 +20,10 @@ public class Update {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public GregorianCalendar getDate() {
+	public Calendar getDate() {
 		return date;
 	}
-	public void setDate(GregorianCalendar date) {
+	public void setDate(Calendar date) {
 		this.date = date;
 	}
 	

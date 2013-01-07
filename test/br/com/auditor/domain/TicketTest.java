@@ -17,7 +17,7 @@ public class TicketTest {
 	
 	  @BeforeClass 
 	  public static void testSetup(){
-		  ticket= new Ticket("2012120410000091", new GregorianCalendar(2012, 01, 01));
+		  ticket= new Ticket("2012120410000091", new GregorianCalendar(2012, 01, 01), EQuee.TRIAGEM);
 	  }
 
 	/**
@@ -48,7 +48,7 @@ public class TicketTest {
 	@Test
 	public void testObtaningCurrentStateInNewInstance() {
 		Update currentState= ticket.getCurrentState();
-		assertTrue(EStates.NEW.compareTo(currentState.getState())==0);
+		assertTrue(EStates.OPEN.compareTo(currentState.getState())==0);
 	}
 	
 	/**

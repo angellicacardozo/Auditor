@@ -1,0 +1,8 @@
+package br.com.auditor.policies;
+
+public enum ETicketAgeGroupPolicies {
+	LESSTHANOREQUALTENDAYS, 
+	BETWEENELEVENANDTHIRTY,
+	BETWEENTHIRTYORSIXTYDAYS,
+	SIXTYOROLDER;
+}

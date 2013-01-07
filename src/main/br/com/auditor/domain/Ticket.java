@@ -5,19 +5,26 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
+import br.com.auditor.policies.ETicketAgeGroupPolicies;
 
 public class Ticket {
 	
 	private String number;
 	private Calendar openDate;
 	private List<Update> updates = new ArrayList<Update>();
+	private AgeCounterAlgorithmBase ageCounter;
 	
-	public Ticket(String number, Calendar openDate) {
+	public Ticket(String number, Calendar openDate, String quee) {
 		this.number= number;
 		this.openDate= openDate;
+		this.setAgeCounter(new FreshlyTicketAlgorithm());
 		
 		/**
 		 * @todo checkup if this is a new ticket and set NEW states by default
@@ -25,7 +32,8 @@ public class Ticket {
 		 */
 		if(this.getCurrentState()==null) {
 			Update update= new Update();
-			update.setState(EStates.NEW);
+			update.setState(EStates.OPEN);
+			update.setQuee(quee);
 			this.updates.add(update);
 		}
 	}
@@ -68,10 +76,23 @@ public class Ticket {
 	}
 	
 	public int getTotalOpenDays() {
-		Date past = this.getOpenDate().getTime();
-		Date today= new GregorianCalendar().getTime();
+		LocalDate past = LocalDate.fromCalendarFields(this.getOpenDate());
+		LocalDate today= LocalDate.now();
 		
-		return Days.daysBetween(new DateTime(past), new DateTime(today)).getDays();
+		return Days.daysBetween(past.toDateMidnight(), today.toDateMidnight()).getDays();
+	}
+	
+	public String toString() {
+		DateTime jodaTime = new DateTime(this.getOpenDate().getTimeInMillis(),DateTimeZone.forTimeZone(TimeZone.getTimeZone("US/Central")));
+		return "Numero do ticket: "+this.getNumber()+", Data de abertura do chamado: "+jodaTime+", Total de dias em aberto: "+this.getTotalOpenDays();
+	}
+
+	public void setAgeCounter(AgeCounterAlgorithmBase ageCounter) {
+		this.ageCounter = ageCounter;
+	}
+	
+	public ETicketAgeGroupPolicies getAge() {
+		return this.ageCounter.calculateAge(this);
 	}
 	
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.Test;
 
+import br.com.auditor.domain.EQuee;
 import br.com.auditor.domain.EStates;
 import br.com.auditor.domain.Ticket;
 import br.com.auditor.domain.Update;
@@ -34,22 +35,27 @@ public class ExcelDataExtractorTest {
 	
 	@Test
 	public void testIfExcelHeaderIsTicketInformationLine() {
-		String line = new String("TSO-Ticket#;Idade;Título;Criado;Alterado;Hora de Fechamento;Fila;liente;ID. do Cliente;Serviço;Tipo;Data de Decisão;Data vencimentoetc");
+		String line = new String("");
 		assertFalse(ExcelDataExtractor.isTicketInformationLine(line));
 	}
 	
 	@Test
 	public void testIfTicketLineInformationIsTicketInformationLine() {
-		String line = new String("2012100510000011;6394649;sem assunto;2012-10-05 10:15:05;2012-10-05 10:48:36;;Triagem;client.mail@yahoo.com.br;client.mail@yahoo.com.br;;default;;;");
+		String line = new String("");
 		assertTrue(ExcelDataExtractor.isTicketInformationLine(line));
 	}
 	
 	@Test
 	public void testObtainingOpenTicketDataFromCSVLine() {
-		String line= "2012121810000028;1008;Nome de projetos com acentos são gravados erradamente;2010-12-18 11:15:51;2012-12-18 11:15:51;;Suporte Interno;tso.client.name;Client-Company;Manutenção de Software;Defeito em Funcionalidade;;;";
-		
+		String line= "";
 		Ticket ticket= ExcelDataExtractor.openTicketByLineInformation(line);
-		assertTrue(EStates.NEW.compareTo(ticket.getCurrentState().getState())==0);
+		assertTrue(EStates.OPEN.compareTo(ticket.getCurrentState().getState())==0);
 	}
 	
+	@Test
+	public void testObtainingClosedTicketDataFromCSVLine() {
+		String line= "";
+		Ticket ticket= ExcelDataExtractor.openTicketByLineInformation(line);
+		assertTrue(EStates.CLOSED.compareTo(ticket.getCurrentState().getState())==0);
+	}
 }
