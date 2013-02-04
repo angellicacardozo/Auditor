@@ -3,15 +3,16 @@ package br.com.auditor.domain;
 import java.util.Calendar;
 
 public class Update {
-	private String quee;
+	private Quee quee;
 	private String state;
 	private Calendar date;
 	private String owner= new String("SYSTEM");
+	private String classification;
 	
-	public String getQuee() {
+	public Quee getQuee() {
 		return quee;
 	}
-	public void setQuee(String quee) {
+	public void setQuee(Quee quee) {
 		this.quee = quee;
 	}
 	public String getState() {
@@ -33,5 +34,13 @@ public class Update {
 	
 	public String getOwner() {
 		return this.owner;
+	}
+	
+	public String getClassification() {
+		return classification;
+	}
+	
+	public void setClassification(String classification) {
+		this.classification = classification;
 	}
 }

@@ -10,8 +10,8 @@ public class ARTicket extends Ticket {
 
 	private String arNumber;
 	
-	public ARTicket(String number, Calendar openDate, String quee) {
-		super(number, openDate, quee);
+	public ARTicket(String number, Calendar openDate) {
+		super(number, openDate);
 	}
 
 	public String getArNumber() {
@@ -24,7 +24,7 @@ public class ARTicket extends Ticket {
 	
 	public String toString() {
 		DateTime jodaTime = new DateTime(this.getOpenDate().getTimeInMillis(),DateTimeZone.forTimeZone(TimeZone.getTimeZone("US/Central")));
-		return "AR:"+this.getArNumber()+", Numero do ticket: "+this.getNumber()+", Data de abertura do chamado: "+jodaTime+", Total de dias em aberto: "+this.getTotalOpenDays();
+		return this.getTitle()+"\nAR:"+this.getArNumber()+"\n Numero do ticket: "+this.getNumber()+", Data de abertura do chamado: "+jodaTime+", Total de dias em aberto: "+this.getTotalOpenDays()+", Estado: "+this.getCurrentState().getState();
 	}
 	
 }

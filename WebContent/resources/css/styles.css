@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+html, body, #wrap {height: 100%;}
+body > #wrap {height: auto; min-height: 100%;}
+#content {padding-bottom: 40px;}  /* deve ser a mesma altura do rodapé */
+#footer {
+	position: relative;
+	margin-top: -40px; /* A mesma altura do rodapé, o valor deve ser negativo */
+	height: 40px;
+	clear:both
+}

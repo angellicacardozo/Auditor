@@ -11,13 +11,15 @@ import org.joda.time.Days;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import br.com.auditor.policies.TicketNewStatePolicie;
+
 public class TicketTest {
 	
 	static Ticket ticket;
 	
 	  @BeforeClass 
 	  public static void testSetup(){
-		  ticket= new Ticket("2012120410000091", new GregorianCalendar(2012, 01, 01), EQuee.TRIAGEM);
+		  ticket= new Ticket("2012120410000091", new GregorianCalendar(2012, 01, 01));
 	  }
 
 	/**
@@ -42,13 +44,12 @@ public class TicketTest {
 	 */
 	
 	/**
-	 * When a ticket open for the first time, it must contains a default update
+	 * When a ticket open for the first time, it must not contains any update
 	 * 	setting its states to NEW
 	 */
 	@Test
 	public void testObtaningCurrentStateInNewInstance() {
-		Update currentState= ticket.getCurrentState();
-		assertTrue(EStates.OPEN.compareTo(currentState.getState())==0);
+		assertTrue(ticket.getCurrentState()==null);
 	}
 	
 	/**
@@ -61,8 +62,6 @@ public class TicketTest {
 		
 		Update ownerUpdate= new Update();
 		ownerUpdate.setDate(new GregorianCalendar());
-		ownerUpdate.setQuee(ticket.getCurrentState().getQuee());
-		ownerUpdate.setState(ticket.getCurrentState().getState());
 		ownerUpdate.setOwner(newOwnerName);
 		
 		ticket.applyUpdate(ownerUpdate);
@@ -77,17 +76,14 @@ public class TicketTest {
 	 */
 	@Test
 	public void testChangingTicketQuee() {
-		String newQuee = new String("Suport");
+		Quee newQuee = new Quee("Other quee", "Other quee");
 		
 		Update queeUpdate= new Update();
-		queeUpdate.setDate(new GregorianCalendar());
 		queeUpdate.setQuee(newQuee);
-		queeUpdate.setState(ticket.getCurrentState().getState());
-		queeUpdate.setOwner(ticket.getCurrentOwner());
 		
 		ticket.applyUpdate(queeUpdate);
 		
-		assertTrue(newQuee.compareTo(ticket.getCurrentState().getQuee())==0);
+		assertTrue(newQuee.getName().compareTo(ticket.getCurrentState().getQuee().getName())==0);
 	}
 	
 	/**
@@ -97,10 +93,7 @@ public class TicketTest {
 	@Test
 	public void testChangingTicketState() {
 		Update stateUpdate= new Update();
-		stateUpdate.setDate(new GregorianCalendar());
-		stateUpdate.setQuee(ticket.getCurrentState().getQuee());
 		stateUpdate.setState(EStates.PENDING);
-		stateUpdate.setOwner(ticket.getCurrentOwner());
 		
 		ticket.applyUpdate(stateUpdate);
 		
@@ -118,5 +111,19 @@ public class TicketTest {
 		int totalDays= Days.daysBetween(new DateTime(past), new DateTime(today)).getDays();
 		
 		assertTrue(ticket.getTotalOpenDays()==totalDays);
+	}
+	
+	@Test
+	public void testStatePolicieWithAnNewTicket() {
+		
+		Ticket ticket= new Ticket("My ticket that must be instantiated with NEW state", new GregorianCalendar());
+		
+		if(TicketNewStatePolicie.validate(ticket)) {
+			Update stateUpdate= new Update();
+			stateUpdate.setState(EStates.NEW);
+			ticket.applyUpdate(stateUpdate);
+		}
+		
+		assertTrue(EStates.NEW.compareTo(ticket.getCurrentState().getState())==0);
 	}
 }

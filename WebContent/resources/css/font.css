@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+
+body
+{
+    letter-spacing: 0;
+    line-height: 26px;
+	
+ 	font: 100% Arial,Helvetica,sans-serif;
+	font-size: 0.750em;
+}
+
+h1
+{
+	font-size: 1.66em;
+}

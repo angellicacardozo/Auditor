@@ -1,0 +1,89 @@
+.row
+{
+	padding: 5px 10px 5px 10px;
+}
+
+label
+{
+	display: block;
+	padding: 3px 0 3px 0;
+	margin-bottom: 3px;
+}
+
+input
+{
+	margin:0; padding:0;
+	border: 0;
+}
+
+input[type=text], input[type=password]
+{
+	border: 1px solid #ccc;
+	padding: 2px;
+}
+
+input[type=text]:focus, input[type=password]:focus
+{
+	border-color: #000;
+}
+
+input[type=text].error, input[type=password].error
+{
+	border-color: #FF3300;
+}
+
+input[type=text].error + span, input[type=password].error + span
+{
+	color:#FF3333;
+	font-weight: bold;
+	font-size: 0.750em;
+	display: block;
+	padding: 2px;
+}
+
+button
+{
+	display: inline-block;
+    overflow: visible;
+    position: relative;
+	border: 0;
+	padding: 8px 8px 9px;
+	
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	
+    cursor: pointer;
+    
+    font-weight: bold;
+    text-decoration: none;
+	
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	
+	border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+	
+	border-radius: 4px;
+	
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	
+	color: #FFFFFF !important;
+	font-size: 0.875em;
+}
+
+button.primary
+{
+	background-color: #FF5C00;
+}
+
+button.primary:hover
+{
+	background-color: #FF8400;
+}

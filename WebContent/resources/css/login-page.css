@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* CSS Document */
+
+div.checkbox-group
+{
+	height: 100%;
+	overflow: auto;
+}
+
+div.checkbox-group > input[type=checkbox]
+{
+	float: left;
+	margin: 3px;
+}
+
+h1
+{
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 10px;
+	
+	padding: 15px;
+}
+
+
+/* LOGIN PAGE */
+
+#content
+{
+	padding-top: 10%;
+}
+
+#main-box
+{
+	width: 345px;
+	height: 310px;
+	margin: 0 auto;
+	border-radius: 4px;
+	
+	background-color: #FFF;
+	box-shadow: 0px 0px 3px #696969;
+}
+
+#main-box > form
+{
+	padding: 0 10px 0 15px;
+}
+
+#main-box > p
+{
+	border-top: 1px solid #CCC;
+	padding: 5px 0 0 0;
+	margin-top: 12px;
+	text-align: center;
+}
+
+input[type=text], button[type=submit], input[type=password]
+{
+	width: 140px;
+}
+
+#footer
+{
+	text-align: center;
+}

@@ -17,25 +17,15 @@ import br.com.auditor.policies.ETicketAgeGroupPolicies;
 public class Ticket {
 	
 	private String number;
+	private String title;
 	private Calendar openDate;
 	private List<Update> updates = new ArrayList<Update>();
 	private AgeCounterAlgorithmBase ageCounter;
 	
-	public Ticket(String number, Calendar openDate, String quee) {
+	public Ticket(String number, Calendar openDate) {
 		this.number= number;
 		this.openDate= openDate;
 		this.setAgeCounter(new FreshlyTicketAlgorithm());
-		
-		/**
-		 * @todo checkup if this is a new ticket and set NEW states by default
-		 * New ticket - a ticket with NO previous state
-		 */
-		if(this.getCurrentState()==null) {
-			Update update= new Update();
-			update.setState(EStates.OPEN);
-			update.setQuee(quee);
-			this.updates.add(update);
-		}
 	}
 	
 	public String getNumber() {
@@ -51,6 +41,22 @@ public class Ticket {
 	 * @param quee
 	 */
 	public void applyUpdate(Update change) {
+		
+		Update currentState= this.getCurrentState();
+		if(currentState!=null) {
+			if(change.getOwner()==null) {
+				change.setOwner(currentState.getOwner());
+			}
+			
+			if(change.getQuee()==null) {
+				change.setQuee(currentState.getQuee());
+			}
+			
+			if(change.getState()==null) {
+				change.setState(currentState.getState());
+			}
+		}
+		
 		this.updates.add(change);
 	}
 	
@@ -84,7 +90,7 @@ public class Ticket {
 	
 	public String toString() {
 		DateTime jodaTime = new DateTime(this.getOpenDate().getTimeInMillis(),DateTimeZone.forTimeZone(TimeZone.getTimeZone("US/Central")));
-		return "Numero do ticket: "+this.getNumber()+", Data de abertura do chamado: "+jodaTime+", Total de dias em aberto: "+this.getTotalOpenDays();
+		return this.getTitle()+"\nNumero do ticket: "+this.getNumber()+", Data de abertura do chamado: "+jodaTime+", Total de dias em aberto: "+this.getTotalOpenDays()+", Estado: "+this.getCurrentState().getState();
 	}
 
 	public void setAgeCounter(AgeCounterAlgorithmBase ageCounter) {
@@ -93,6 +99,31 @@ public class Ticket {
 	
 	public ETicketAgeGroupPolicies getAge() {
 		return this.ageCounter.calculateAge(this);
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public Calendar getFirstResponseDate() {
+		
+		if(this.updates.size() == 0) {
+			return null;
+		}
+		
+		Update firstResponse = null;
+		for (Update update : this.updates) {
+			if(update.getClassification()!=null && update.getClassification().compareTo(EUpdateClassification.FIRSTRESPONSE)==0) {
+				firstResponse= update;
+				break;
+			}
+		}
+		
+		return firstResponse.getDate();
 	}
 	
 }

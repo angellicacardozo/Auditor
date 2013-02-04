@@ -1,0 +1,7 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	color: #424243;
+	background: #CDCDCD url(../imgs/login-bg.png) center center no-repeat;
+}
