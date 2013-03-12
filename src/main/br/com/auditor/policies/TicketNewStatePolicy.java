@@ -2,7 +2,7 @@ package br.com.auditor.policies;
 
 import br.com.auditor.domain.Ticket;
 
-public class TicketNewStatePolicie {
+public class TicketNewStatePolicy {
 
 	public static Boolean validate(Ticket ticket) {
 		

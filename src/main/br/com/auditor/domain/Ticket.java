@@ -21,6 +21,7 @@ public class Ticket {
 	private Calendar openDate;
 	private List<Update> updates = new ArrayList<Update>();
 	private AgeCounterAlgorithmBase ageCounter;
+	private String client;
 	
 	public Ticket(String number, Calendar openDate) {
 		this.number= number;
@@ -55,6 +56,10 @@ public class Ticket {
 			if(change.getState()==null) {
 				change.setState(currentState.getState());
 			}
+			
+			if(change.getDate()==null) {
+				change.setDate(currentState.getDate());
+			}
 		}
 		
 		this.updates.add(change);
@@ -81,11 +86,19 @@ public class Ticket {
 		return currentState.getOwner();
 	}
 	
+	public boolean isTicketClosed() {
+		return this.getCurrentState() instanceof CloseUpdate;
+	}
+	
 	public int getTotalOpenDays() {
 		LocalDate past = LocalDate.fromCalendarFields(this.getOpenDate());
-		LocalDate today= LocalDate.now();
 		
-		return Days.daysBetween(past.toDateMidnight(), today.toDateMidnight()).getDays();
+		LocalDate now= LocalDate.now();
+		if(this.isTicketClosed()) {
+			now= LocalDate.fromCalendarFields(this.getCurrentState().getDate());
+		}
+		
+		return Days.daysBetween(past.toDateMidnight(), now.toDateMidnight()).getDays();
 	}
 	
 	public String toString() {
@@ -109,6 +122,32 @@ public class Ticket {
 		this.title = title;
 	}
 	
+	public String geCloseClassification() {
+		if(this.updates.size() == 0) {
+			return "";
+		}
+		
+		if(this.getCurrentState() instanceof CloseUpdate) {
+			CloseUpdate update= (CloseUpdate) this.getCurrentState();
+			return update.getCloseClassification();
+		}
+		
+		return "";
+	}
+	
+	public Calendar getCloseDate() {
+		if(this.updates.size() == 0) {
+			return null;
+		}
+		
+		if(this.getCurrentState() instanceof CloseUpdate) {
+			CloseUpdate update= (CloseUpdate) this.getCurrentState();
+			return update.getDate();
+		}
+		
+		return null;
+	}
+	
 	public Calendar getFirstResponseDate() {
 		
 		if(this.updates.size() == 0) {
@@ -123,7 +162,19 @@ public class Ticket {
 			}
 		}
 		
+		if(firstResponse==null) {
+			return null;
+		}
+		
 		return firstResponse.getDate();
+	}
+
+	public String getClient() {
+		return client;
+	}
+
+	public void setClient(String client) {
+		this.client = client;
 	}
 	
 }

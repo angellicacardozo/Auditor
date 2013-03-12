@@ -4,10 +4,10 @@ import java.util.Calendar;
 
 public class Update {
 	private Quee quee;
-	private String state;
+	protected String state;
 	private Calendar date;
 	private String owner= new String("SYSTEM");
-	private String classification;
+	protected String classification;
 	
 	public Quee getQuee() {
 		return quee;

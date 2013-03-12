@@ -21,8 +21,8 @@ public class MainController {
 	@RequestMapping(method=RequestMethod.GET)
 	public String get(ModelMap model) {
 		
-		List<Quee> quees= ExcelDataQueeExtractor.extractQueeListFromCSVFile("resources/reports/quee.production.csv");
-		List<Ticket> tickets= ExcelDataExtractor.extractTicketListFromCSVData("resources/reports/report.csv", quees);
+		List<Quee> quees= ExcelDataQueeExtractor.extractQueeListFromCSVFile("C:\\Java\\apache-tomcat-7.0.8\\wtpwebapps\\Auditor\\quee.production.csv");
+		List<Ticket> tickets= ExcelDataExtractor.extractTicketListFromCSVData("C:\\Java\\apache-tomcat-7.0.8\\wtpwebapps\\Auditor\\report.csv", quees);
 		
 		model.addAttribute("tickets", tickets);
 		return "home";

@@ -34,14 +34,23 @@ public class CSVReportGenerator {
 			List<Quee> quees= ExcelDataQueeExtractor.extractQueeListFromCSVFile("WebContent/quee.production.csv");
 			List<Ticket> tickets= ExcelDataExtractor.extractTicketListFromCSVData("WebContent/report.csv", quees);
 		
-			writer.writeNext(new String[]{"Numero do chamado","Titulo", "Total de dias em aberto", "Estado", "Data de abertura","Primeira resposta","Fila"});
+			writer.writeNext(new String[]{"Numero do chamado","Titulo", "Total de dias em aberto", "Estado", "Data de abertura","Primeira resposta", "Data de fechamento","Fila", "Classificacao Encerramento", "Cliente"});
 			
 			String[] values;
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			for (Ticket ticket : tickets) {
-			    String firstResponse = sdf.format(ticket.getFirstResponseDate().getTime());
+			    String firstResponse = "";
+			    String closeDate= "";
+			    if(ticket.getFirstResponseDate() != null) {
+			    	firstResponse = sdf.format(ticket.getFirstResponseDate().getTime());
+			    }
+			    
+			    if(ticket.getCloseDate() != null) {
+			    	closeDate = sdf.format(ticket.getCloseDate().getTime());
+			    }
+			    
 			    String openDate = sdf.format(ticket.getOpenDate().getTime());
-				values= new String[]{ticket.getNumber(),ticket.getTitle(), String.valueOf(ticket.getTotalOpenDays()), ticket.getCurrentState().getState(), openDate, firstResponse, ticket.getCurrentState().getQuee().getName()};
+				values= new String[]{ticket.getNumber(),ticket.getTitle(), String.valueOf(ticket.getTotalOpenDays()), ticket.getCurrentState().getState(), openDate, firstResponse, closeDate, ticket.getCurrentState().getQuee().getName(), ticket.geCloseClassification(), ticket.getClient()};
 				writer.writeNext(values);
 			}
 			
